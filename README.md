@@ -1,2 +1,8 @@
-rsWSMan
-=======
+rsWPI
+=====
+<pre>
+rsWSMAN MyWSMAN
+{
+
+}
+</pre>
