@@ -25,7 +25,13 @@ rsWSManConfig WSMan
 ```
 
 From a Client node you should be able to connect using:
+PSSession Example:
 ```PoSh
 $thumb = (Get-ChildItem Cert:\LocalMachine\My | ? Subject -eq "CN=WSMAN").Thumbprint
 Enter-PSSession -ConnectionUri https://SERVERIP:5986 -CertificateThumbprint $thumb -SessionOption (New-PSSessionOption -SkipCACheck -SkipCNCheck)
+```
+Invoke-Command Example
+```PoSh
+$thumb = (Get-ChildItem Cert:\LocalMachine\My | ? Subject -eq "CN=WSMAN").Thumbprint
+Invoke-Command -ConnectionUri https://SERVERIP:5986 -SessionOption (New-PSSessionOption -SkipCACheck -SkipCNCheck) -CertificateThumbprint $thumb -ScriptBlock {Get-Process}
 ```
