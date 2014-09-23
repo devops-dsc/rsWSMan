@@ -24,7 +24,7 @@ rsWSManConfig WSMan
 }
 ```
 
-From a Client node you should be able to connect using:
+From a Client node you should be able to connect using:<br>
 PSSession Example:
 ```PoSh
 $thumb = (Get-ChildItem Cert:\LocalMachine\My | ? Subject -eq "CN=WSMAN").Thumbprint
