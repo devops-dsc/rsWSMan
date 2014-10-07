@@ -35,3 +35,13 @@ Invoke-Command Example
 $thumb = (Get-ChildItem Cert:\LocalMachine\My | ? Subject -eq "CN=WSMAN").Thumbprint
 Invoke-Command -ConnectionUri https://SERVERIP:5986 -SessionOption (New-PSSessionOption -SkipCACheck -SkipCNCheck) -CertificateThumbprint $thumb -ScriptBlock {Get-Process}
 ```
+PSJob Example
+```PoSh
+$ips = @("SERVER01","SERVER02")
+$thumb = (Get-ChildItem Cert:\LocalMachine\My | ? Subject -eq "CN=WSMAN").Thumbprint
+foreach($ip in $ips) {
+start-job -ScriptBlock { param ($ip,$thumb) Invoke-Command -ConnectionUri $("https://", $ip ,":5986" -join '') -SessionOption (New-PSSessionOption -SkipCACheck -SkipCNCheck) -CertificateThumbprint $thumb -ScriptBlock {$env:COMPUTERNAME} } -ArgumentList $ip, $thumb
+}
+Get-Job | Wait-Job
+Get-Job | Receive-Job
+```
